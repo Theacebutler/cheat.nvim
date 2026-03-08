@@ -47,7 +47,7 @@ local function create_buff(path)
 end
 
 local function main()
-	local q = vim.fn.input("Enter programming language fallowd by the search query: ")
+	local q = vim.fn.input("Enter programming language followed by the search query: ")
 	local full_query = parse_query(q)
 	if full_query == nil then
 		vim.notify("No query provided", vim.log.levels.ERROR)
