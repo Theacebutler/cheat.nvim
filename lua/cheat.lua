@@ -38,7 +38,6 @@ local function create_buff(path)
 	if buff == -1 then
 		buff = vim.api.nvim_create_buf(false, true)
 	end
-	-- vim.bo[buff].bt = "terminal"
 	vim.bo[buff].swapfile = false
 	vim.bo[buff].buflisted = false
 	vim.bo[buff].modifiable = false
