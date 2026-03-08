@@ -20,14 +20,14 @@ end
 
 local function call_api(q)
 	-- call the API and return the path to the file where the response is stored
-	local url = string.format("cheat.sh/%s", q)
+	local url = string.format("https://cheat.sh/%s?T&style=bw", q)
 	local path = string.gsub(q, "+", "_")
 	path = string.gsub(path, "/", "_")
-	path = string.format("/tmp/cheat_%s.txt", path)
-	local cmd = string.format("curl google.com > %s", path)
+	path = string.format("/tmp/cheat_%s", path)
+	local cmd = string.format("curl '%s' > %s", url, path)
 	local output = vim.fn.system(cmd)
 	if not output then
-		print("Failed to execute curl")
+		print("Failed to execute ", cmd)
 		return nil
 	end
 	return path
@@ -38,12 +38,10 @@ local function create_buff(path)
 	if buff == -1 then
 		buff = vim.api.nvim_create_buf(false, true)
 	end
-	vim.bo[buff].buftype = "nofile"
-	vim.bo[buff].bufhidden = "hide"
+	-- vim.bo[buff].bt = "terminal"
 	vim.bo[buff].swapfile = false
 	vim.bo[buff].buflisted = false
 	vim.bo[buff].modifiable = false
-	vim.bo[buff].filetype = "markdown"
 	vim.api.nvim_buf_set_keymap(buff, "n", "q", ":q<CR>", { noremap = true, silent = true })
 	return buff
 end
