@@ -1,14 +1,20 @@
 local M = {}
 -- Get the search query
 local function parse_query(q)
-	-- the first word is the programming language, the rest is the search query
+	if #q == 0 then
+		return nil
+	end
+	-- the first word is the programming language or a search term, the rest is the search query
 	local words = {}
 	for word in q:gmatch("%w+") do
 		table.insert(words, word)
 	end
-	local language = words[1]
+	local parm_1 = words[1]
+	if #words == 1 then
+		return parm_1
+	end
 	local search_query = table.concat(words, "+", 2)
-	local sq = string.format("%s/%s", language, search_query)
+	local sq = string.format("%s/%s", parm_1, search_query)
 	return sq
 end
 
@@ -45,6 +51,10 @@ end
 local function main()
 	local q = vim.fn.input("Enter programming language fallowd by the search query: ")
 	local full_query = parse_query(q)
+	if full_query == nil then
+		vim.notify("No query provided", vim.log.levels.ERROR)
+		return
+	end
 	local res_file = call_api(full_query)
 	if not res_file then
 		return
