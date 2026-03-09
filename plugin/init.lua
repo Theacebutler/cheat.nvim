@@ -1,1 +1,3 @@
--- require("cheat").setup({})
+return {
+	require("cheat.nvim").setup({}),
+}
