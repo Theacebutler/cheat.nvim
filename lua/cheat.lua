@@ -65,10 +65,12 @@ local function main()
 		focusable = true,
 	})
 end
-main()
+-- main()
 
 M.setup = function(opts)
-	vim.api.nvim_create_user_command("Cheat", main, {})
+	vim.api.nvim_create_user_command("Cheat", function()
+		main()
+	end, {})
 	local open = opts.open or "<leader>sc"
 	vim.keymap.set("n", open, ":Cheat<CR>", { noremap = true, silent = true })
 end
