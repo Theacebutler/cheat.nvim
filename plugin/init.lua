@@ -1,3 +1,3 @@
-require("cheat.nvim").setup({
-	open = "<leader>sc",
-})
+return {
+	require("cheat.nvim").setup({}),
+}
